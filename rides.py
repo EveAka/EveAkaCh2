@@ -140,15 +140,6 @@ def delete_request(request_id):
     requests.remove(my_req[0])
     return jsonify({'request': my_req[0]})
 
-#method get all requests by a particular id 
-@app.route('/ridesapp/api/v1/rides/<int:ride_id>/requests', methods=['GET'])
-def get_all_requests_by_ride_id(ride_id):
-    my_req = [req for req in requests if req['ride_id'] == ride_id] # loop through the requests to check for the requestid
-    if len(my_req) == 0:
-        abort(404)
-    return jsonify({'request': my_req})
-
-
 #This is an error handler to give a better response for code 404!
 @app.errorhandler(404)
 def not_found(error):

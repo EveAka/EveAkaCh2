@@ -41,31 +41,16 @@ class TestFlaskApi(unittest.TestCase):
             data = json.loads(res.get_data())
             self.assertEqual(data['ride']['NoPLate'], "UBA234F")
             self.assertEqual(res.status_code, 201)
-
-#write a test on update ride
-    def test_update_ride(self):
-        
-            
-            ride ={
-        'id': 2,
-        'NoPLate': u'UBB214G',
-        'destination': u'Mukono'
-      
-    }
-            res = self.client.put('ridesapp/api/v1/rides/2',data=json.dumps(ride),content_type='application/json')                          
-            self.assertEqual(res.status_code, 200)
-            data = json.loads(res.get_data())
-            self.assertEqual(data['ride']['NoPLate'], 'UBB214G')
-            self.assertEqual(ride[2]['NoPLate'], 'UDE114D') 
+ 
     
-#test on delete ride
+#test delete ride
     def test_delete_ride(self):
             res = self.client.delete('/ridesapp/api/v1/rides/3')#Good URL
             self.assertEqual(res.status_code, 200)
             res = self.client.delete('/ridesapp/api/v1/rides')#Bad URL
             self.assertEqual(res.status_code, 405)
 
-#test on create request
+#test create request
     def test_create_request(self):  
 
             request =  {
@@ -76,32 +61,26 @@ class TestFlaskApi(unittest.TestCase):
         
         }
                        
-            
-            res = self.client.post('ridesapp/api/v1/requests', data = json.dumps(request),content_type = 'application/json')
+            res = self.client.post('ridesapp/api/v1/rides/1/requests', data = json.dumps(request),content_type = 'application/json')
             result = json.loads(res.data.decode())
             print(result)
-            data = json.loads(res.get_data())
-            self.assertEqual(data['ride']['NoPLate'], "UBA234F")
             self.assertEqual(res.status_code, 201)
     
-#test on get all requests
+#test get all requests
     def test_get_all_requests(self):
             res = self.client.get('/ridesapp/api/v1/requests')           
             result = json.loads(res.data.decode())   
             print(result)       
             self.assertEqual(res.status_code, 200)
 
-#test on get a single request
+#test get a single request
     def test_get_a_single_request(self):
             res = self.client.get('/ridesapp/api/v1/requests/1') 
             result = json.loads(res.data.decode())
             print(result)
             self.assertEqual(res.status_code, 200)        
 
-
-#test on update request
-
-#test on delete a request
+#test delete a request
 def test_delete_request(self):
             res = self.client.delete('/ridesapp/api/v1/rides/request/1')#Good RideURL
             self.assertEqual(res.status_code, 200)
@@ -109,18 +88,7 @@ def test_delete_request(self):
             res = self.client.delete('/ridesapp/api/v1/rides')#Bad RideURL
             self.assertEqual(res.status_code, 405)
 
-   
-
-
-
-    
-  
-
-
-
-        
-               
-        
+                
 if __name__ == "__main__": 
 
     unittest.main()
